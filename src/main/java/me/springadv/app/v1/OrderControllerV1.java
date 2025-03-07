@@ -1,19 +1,31 @@
-package me.springadv.app.v0;
+package me.springadv.app.v1;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import me.springadv.trace.TraceStatus;
+import me.springadv.trace.TraceV1;
 
 @RequiredArgsConstructor
 @RestController
-public class OrderControllerV0 {
+public class OrderControllerV1 {
 
-	public final OrderServiceV0 orderService;
+	public final OrderServiceV1 orderService;
+	private final TraceV1 trace;
 
-	@GetMapping("/v0/request")
+	@GetMapping("/v1/request")
 	public String request(String itemId) {
-		orderService.orderItem(itemId);
-		return "success";
+		TraceStatus status = null;
+
+		try{
+			status = trace.begin("OrderControllerV3.request");
+			orderService.orderItem(itemId);
+			trace.end(status);
+			return "success";
+		}catch(Exception e){
+			trace.exception(status, e);
+			throw e;
+		}
 	}
 }
