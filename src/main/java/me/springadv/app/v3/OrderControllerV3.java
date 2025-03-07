@@ -23,7 +23,7 @@ public class OrderControllerV3 {
 		TraceStatus status = null;
 
 		try {
-			status = trace.begin("OrderControllerV3.request");
+			status = trace.begin("OrderControllerV5.request");
 			orderService.orderItem(itemId);
 			trace.end(status);
 			return "success";

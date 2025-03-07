@@ -1,37 +1,33 @@
-package me.springadv.app.v3;
+package me.springadv.app.v4;
 
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
 import me.springadv.trace.LogTrace;
-import me.springadv.trace.TraceId;
 import me.springadv.trace.TraceStatus;
-import me.springadv.trace.TraceV2;
+import me.springadv.trace.template.AbstractTemplate;
 
 @RequiredArgsConstructor
 @Repository
-public class OrderRepositoryV3 {
+public class OrderRepositoryV4 {
 
 	private final LogTrace trace;
 
 	public void save(String itemId) {
 
-		TraceStatus status = null;
+		AbstractTemplate<String> template = new AbstractTemplate<>(trace){
+			@Override
+			protected String call() {
+				if (itemId.equals("ex")) {
+					throw new IllegalStateException("예외 발생!");
+				}
 
-		try {
-			status = trace.begin("OrderRepositoryV5.save");
-
-			if (itemId.equals("ex")) {
-				throw new IllegalStateException("예외 발생!");
+				sleep(1000);
+				return null;
 			}
+		};
 
-			sleep(1000);
-
-			trace.end(status);
-		} catch (Exception e) {
-			trace.exception(status, e);
-			throw e;
-		}
+		template.execute("OrderRepositoryV5.save");
 	}
 
 	private void sleep(int millis) {
