@@ -1,6 +1,6 @@
 package me.proxy.app.v1;
 
-public class OrderControllerV1Impl implements OrderControllerV1{
+public class OrderControllerV1Impl implements OrderControllerV1 {
 
 	private final OrderServiceV1 orderService;
 

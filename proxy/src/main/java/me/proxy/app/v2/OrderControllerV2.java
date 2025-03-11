@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import me.proxy.app.v1.OrderControllerV1;
-import me.proxy.app.v1.OrderServiceV1;
 
 @Slf4j
 @RestController

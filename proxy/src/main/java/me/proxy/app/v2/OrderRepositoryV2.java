@@ -1,7 +1,5 @@
 package me.proxy.app.v2;
 
-import me.proxy.app.v1.OrderRepositoryV1;
-
 public class OrderRepositoryV2  {
 
 	public void save(String itemId) {
